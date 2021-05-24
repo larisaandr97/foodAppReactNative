@@ -12,6 +12,8 @@ import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { getProviderStatusAsync } from 'expo-location';
 import { SearchScreen } from './src/screens/SearchScreen';
+import { RestaurantScreen } from './src/screens/RestaurantScreen';
+import { FoodDetailsScreen } from './src/screens/FoodDetailsScreen';
 
 const switchNavigator = createSwitchNavigator({
 
@@ -31,7 +33,9 @@ const switchNavigator = createSwitchNavigator({
     Home: {
       screen: createStackNavigator({
         HomePage: HomeScreen,
-        SearchPage: SearchScreen
+        SearchPage: SearchScreen,
+        RestaurantPage: RestaurantScreen,
+        FoodDetailsPage: FoodDetailsScreen
       }, {
         defaultNavigationOptions: {
           headerShown: false

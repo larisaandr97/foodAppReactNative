@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image } from 'react-native'
+import { Restaurant } from '../redux'
 
 interface RestaurantProps {
     item: Restaurant;
@@ -9,11 +10,24 @@ interface RestaurantProps {
 
 const RestaurantCard: React.FC<RestaurantProps> = ({ item, onTap }) => {
     // const icon = '../images/' + item.toLowerCase();
+    let imageUri = "data:image/png;base64," + item.image;
+    const fileReaderInstance = new FileReader();
+    var base64data;
+
+    fileReaderInstance.onloadend = () => {
+        base64data = fileReaderInstance.result;
+        // console.log(base64data);
+    }
+
+    if (item.image) {
+        fileReaderInstance.readAsDataURL(item.image);
+    }
+
     return (
 
         <TouchableOpacity style={styles.container} onPress={() => onTap(item)}>
-            <Image source={imageName} style={styles.imageIcon} />
-            <Text style={{ fontSize: 14, marginTop: 10, color: '#858585' }} >{item}</Text>
+            <Image source={{ uri: `data:image/jpg;base64,${base64data}` }} style={styles.imageIcon} />
+            <Text style={{ fontSize: 14, marginTop: 10, color: '#858585' }} >{item.name}</Text>
         </TouchableOpacity>
 
     )

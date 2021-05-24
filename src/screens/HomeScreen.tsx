@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, Dimensions, Image } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 
 import { useNavigation } from '../utils'
-import { ButtonWithIcon, SearchBar, CategoryCard } from '../components'
+import { ButtonWithIcon, SearchBar, CategoryCard, RestaurantCard, FoodCard } from '../components'
 
 import { connect } from 'react-redux'
-import { onAvailability, UserState, ApplicationState, ShoppingState } from '../redux'
+import { onAvailability, UserState, ApplicationState, ShoppingState, Restaurant, FoodModel } from '../redux'
 
 // import { images } from '../components/index'
 
@@ -25,43 +25,41 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
 
     const { categories, foods, restaurants } = availability;
 
-    // console.log(foods);
+    console.log("RESTAURANTS:");
+    // console.log(restaurants);
 
     useEffect(() => {
         props.onAvailability(location.postalCode)
     }, [])
 
-    // const imageName = categories.forEach(cat => {
-    //     switch (cat) {
-    //         case 'BURGER':
-    //             return images.burgers;
-    //         case 'PASTA':
-    //             return images.pasta;
-    //         case 'COFFEE':
-    //             return images.coffee;
-    //         case 'PIZZA':
-    //             return images.pizza;
-    //     }
-    // })
+
+    const onTapRestaurant = (item: Restaurant) => {
+        navigate('RestaurantPage', { restaurant: item })
+    }
+
+    const onTapFood = (item: FoodModel) => {
+        navigate('FoodDetailPage', { food: item })
+    }
+
 
     const images = [
         {
-            id: 1,
+            id: 11,
             imgName: 'Burgers',
             uri: require('../images/burger.jpg')
         },
         {
-            id: 2,
+            id: 22,
             imgName: 'Pizza',
             uri: require('../images/pizza.jpg')
         },
         {
-            id: 3,
+            id: 32,
             imgName: 'Pasta',
             uri: require('../images/pasta.jpg')
         },
         {
-            id: 4,
+            id: 42,
             imgName: 'Coffee',
             uri: require('../images/coffee.jpeg')
         },
@@ -92,7 +90,27 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
                         renderItem={({ item }) => <CategoryCard item={item.imgName} imageName={item.uri} onTap={() => { alert('Category tapped') }} />}
                         keyExtractor={(item) => `${item.id}`}
                     />
+                    <View>
+                        <Text style={{ fontSize: 25, fontWeight: '600', color: '#f15b5d', marginLeft: 20 }}> Top Restaurants </Text>
+                    </View>
+                    <FlatList horizontal
+                        showsHorizontalScrollIndicator={false}
+                        data={restaurants}
+                        renderItem={({ item }) => <RestaurantCard item={item} onTap={onTapRestaurant} />}
+                        keyExtractor={(item) => `${item.id}`}
+                    />
+                    <View>
+                        <Text style={{ fontSize: 25, fontWeight: '600', color: '#f15b5d', marginLeft: 20 }} > 30 Minutes Foods</Text>
+                    </View>
+                    <FlatList
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        data={foods}
+                        renderItem={({ item }) => <RestaurantCard item={item} onTap={onTapFood} />}
+                        keyExtractor={(item) => `${item.id}`}
+                    />
                 </ScrollView>
+
             </View>
 
         </View>

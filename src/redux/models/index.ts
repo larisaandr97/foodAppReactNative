@@ -19,24 +19,26 @@ import { LocationGeocodedAddress } from 'expo-location'
 
 // Food Model
 export interface FoodModel {
-    _id: string;
+    id: string;
     name: string;
     description: string;
     category: string;
     price: number;
     stock: number;
     readyTime: number;
+    image: Blob;
     // images: [string];
     //unit: number;
 }
 
 //Restaurant Model
 export interface Restaurant {
-    _id: string;
+    id: string;
     name: string;
     foodType: string;
     address: string;
     phone: string;
+    image: Blob;
     // images: string;
     foods: [FoodModel];
 }
@@ -44,7 +46,7 @@ export interface Restaurant {
 export interface FoodAvailability {
     categories: [String];
     restaurants: [Restaurant];
-    foods: [FoodModel]
+    foods: [FoodModel];
     // products: [ProductModel]
 
 }
