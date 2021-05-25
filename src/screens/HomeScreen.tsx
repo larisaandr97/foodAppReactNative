@@ -6,14 +6,15 @@ import { useNavigation } from '../utils'
 import { ButtonWithIcon, SearchBar, CategoryCard, RestaurantCard, FoodCard } from '../components'
 
 import { connect } from 'react-redux'
-import { onAvailability, UserState, ApplicationState, ShoppingState, Restaurant, FoodModel } from '../redux'
+import { onAvailability, onSearchFoods, UserState, ApplicationState, ShoppingState, Restaurant, FoodModel } from '../redux'
 
 // import { images } from '../components/index'
 
 interface HomeProps {
     userReducer: UserState,
     shoppingReducer: ShoppingState,
-    onAvailability: Function
+    onAvailability: Function,
+    onSearchFoods: Function
 }
 
 export const _HomeScreen: React.FC<HomeProps> = (props) => {
@@ -30,6 +31,10 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
 
     useEffect(() => {
         props.onAvailability(location.postalCode)
+        setTimeout(() => {
+            props.onSearchFoods(location.postalCode)
+        }, 1000);
+
     }, [])
 
 
@@ -38,7 +43,8 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
     }
 
     const onTapFood = (item: FoodModel) => {
-        navigate('FoodDetailPage', { food: item })
+        console.log("Tapped: " + item.name);
+        navigate('FoodDetailsPage', { food: item })
     }
 
 
@@ -153,6 +159,6 @@ const mapToStateProps = (state: ApplicationState) => ({
     shoppingReducer: state.shoppingReducer
 })
 
-const HomeScreen = connect(mapToStateProps, { onAvailability })(_HomeScreen)
+const HomeScreen = connect(mapToStateProps, { onAvailability, onSearchFoods })(_HomeScreen)
 
 export { HomeScreen }

@@ -28,7 +28,7 @@ export interface FoodModel {
     readyTime: number;
     image: Blob;
     // images: [string];
-    //unit: number;
+    unit: number;
 }
 
 //Restaurant Model
@@ -71,6 +71,6 @@ export interface UserState {
 
 export interface ShoppingState {
     availability: FoodAvailability,
-    //   availableFoods: [FoodModel]
+    availableFoods: [FoodModel]
     //other models
 }

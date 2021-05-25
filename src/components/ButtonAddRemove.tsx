@@ -21,7 +21,7 @@ const ButtonAddRemove: React.FC<ButtonProps> = ({ onTap }) => {
 
 
 const styles = StyleSheet.create({
-    btn: { display: 'flex', justifyContent: 'center', alignItems: 'center', width: 80, height: 40, alignSelf: 'center', },
+    btn: { display: 'flex', justifyContent: 'center', alignItems: 'center', width: 80, height: 40, alignSelf: 'center', borderRadius: 30, backgroundColor: '#f15b5b' },
 })
 
 export { ButtonAddRemove }
