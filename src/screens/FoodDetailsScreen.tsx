@@ -6,14 +6,16 @@ import { useNavigation } from '../utils/useNavigation'
 import { ButtonWithIcon, FoodCard } from '../components'
 
 import { connect } from 'react-redux'
-import { UserState, ApplicationState, ShoppingState, FoodModel } from '../redux'
-
+import { UserState, ApplicationState, ShoppingState, FoodModel, onUpdateCart } from '../redux'
+import { checkExistence } from '../utils'
 
 interface FoodDetailsProps {
-    navigation: { getParam: Function, goBack: Function }
+    userReducer: UserState,
+    navigation: { getParam: Function, goBack: Function },
+    onUpdateCart: Function,
 }
 
-const FoodDetailsScreen: React.FC<FoodDetailsProps> = (props) => {
+const _FoodDetailsScreen: React.FC<FoodDetailsProps> = (props) => {
 
     const { navigate } = useNavigation();
 
@@ -29,8 +31,7 @@ const FoodDetailsScreen: React.FC<FoodDetailsProps> = (props) => {
     }
     let imageUri = "data:image/png;base64," + base64data;
 
-
-
+    const { Cart } = props.userReducer;
 
     return (<View style={styles.container}>
         <View style={styles.navigation}>
@@ -50,8 +51,8 @@ const FoodDetailsScreen: React.FC<FoodDetailsProps> = (props) => {
                 <Text> Food will be ready within {food.readyTime} minute(s)</Text>
                 <Text>{food.description} </Text>
             </View>
-            <View style={{ height: 120 }}>
-                <FoodCard item={food} onTap={() => { }} />
+            <View style={{ height: 120, }}>
+                <FoodCard item={checkExistence(food, Cart)} onTap={() => { }} onUpdateCart={props.onUpdateCart} />
             </View>
 
         </View>
@@ -66,6 +67,12 @@ const styles = StyleSheet.create({
     footer: { flex: 1, backgroundColor: 'cyan' }
 })
 
+const mapToStateProps = (state: ApplicationState) => ({
+    userReducer: state.userReducer,
+    shoppingReducer: state.shoppingReducer
+})
+
+const FoodDetailsScreen = connect(mapToStateProps, { onUpdateCart })(_FoodDetailsScreen)
 
 
 export { FoodDetailsScreen }

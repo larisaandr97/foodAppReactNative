@@ -6,21 +6,26 @@ import { useNavigation } from '../utils/useNavigation'
 import { ButtonWithIcon, FoodCard } from '../components'
 
 import { connect } from 'react-redux'
-import { onAvailability, UserState, ApplicationState, ShoppingState, Restaurant, FoodModel } from '../redux'
-import { NavigationEvents } from 'react-navigation'
+import { ApplicationState, Restaurant, FoodModel, onUpdateCart, UserState, onUpdateLocation } from '../redux'
+import { checkExistence } from '../utils'
 
 
 interface RestaurantProps {
+    userReducer: UserState,
+    onUpdateCart: Function,
     navigation: { getParam: Function, goBack: Function }
 }
 
-const RestaurantScreen: React.FC<RestaurantProps> = (props) => {
+const _RestaurantScreen: React.FC<RestaurantProps> = (props) => {
 
     const { navigate } = useNavigation();
 
     const { getParam, goBack } = props.navigation;
     const restaurant = getParam('restaurant') as Restaurant;
     //  console.log(restaurant);
+
+
+    const { Cart } = props.userReducer;
 
     const fileReaderInstance = new FileReader();
     var base64data;
@@ -55,8 +60,7 @@ const RestaurantScreen: React.FC<RestaurantProps> = (props) => {
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={restaurant.foods}
-                renderItem={({ item }) => <FoodCard item={item} onTap={onTapFood} />}
-                // <FoodCard item={checkExistence(item, Cart)} onTap={onTapFood} onUpdateCart={props.onUpdateCart} />}
+                renderItem={({ item }) => <FoodCard item={checkExistence(item, Cart)} onTap={onTapFood} onUpdateCart={props.onUpdateCart} />}
                 keyExtractor={(item) => `${item.id}`}
             />
 
@@ -72,6 +76,14 @@ const styles = StyleSheet.create({
     footer: { flex: 1, backgroundColor: 'cyan' }
 })
 
+
+
+const mapToStateProps = (state: ApplicationState) => ({
+    userReducer: state.userReducer,
+    shoppingReducer: state.shoppingReducer
+})
+
+const RestaurantScreen = connect(mapToStateProps, { onUpdateCart })(_RestaurantScreen)
 
 
 export { RestaurantScreen }
