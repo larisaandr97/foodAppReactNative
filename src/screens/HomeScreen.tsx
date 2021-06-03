@@ -27,15 +27,15 @@ export const _HomeScreen: React.FC<HomeProps> = (props) => {
     const { categories, foods, restaurants } = availability;
 
     console.log("RESTAURANTS:");
-    // console.log(restaurants);
 
     useEffect(() => {
-        props.onAvailability(location.postalCode)
+        props.onAvailability(/*location.postalCode*/);
         setTimeout(() => {
             props.onSearchFoods(location.postalCode)
         }, 1000);
 
     }, [])
+    console.log(restaurants);
 
 
     const onTapRestaurant = (item: Restaurant) => {

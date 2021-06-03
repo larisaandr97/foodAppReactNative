@@ -4,7 +4,7 @@ import { BASE_URL } from '../../utils'
 import { LocationGeocodedAddress } from 'expo-location'
 //import AsyncStorage from '@react-native-community/async-storage'
 import { AsyncStorage } from 'react-native';
-import { FoodModel } from '../models'
+import { FoodModel, UserModel } from '../models'
 
 
 export interface UpdateLocationAction {
@@ -25,7 +25,7 @@ export interface UpdateCartAction {
 
 export interface UserLoginAction {
     readonly type: 'ON_USER_LOGIN',
-    payload: string
+    payload: UserModel
 }
 
 
@@ -73,7 +73,7 @@ export const onUserLogin = (email: string, password: string) => {
     return async (dispatch: Dispatch<UserAction>) => {
 
 
-        const response = await axios.post<string>(`${BASE_URL}/user/login`,
+        const response = await axios.post<UserModel>(`${BASE_URL}/user/login`,
             {
                 email,
                 password
@@ -108,7 +108,7 @@ export const onUserSignup = (email: string, phone: string, password: string) => 
     return async (dispatch: Dispatch<UserAction>) => {
 
 
-        const response = await axios.post<string>(`${BASE_URL}/user/signup`,
+        const response = await axios.post<UserModel>(`${BASE_URL}/user/signup`,
             {
                 email,
                 phone,

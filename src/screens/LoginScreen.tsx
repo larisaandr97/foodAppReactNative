@@ -18,6 +18,11 @@ const _LoginScreen: React.FC<LoginProps> = ({ OnUserLogin, OnUserSignup, userRed
     const [title, setTitle] = useState('Login')
     const [isSignup, setIsSignup] = useState(false)
 
+    const [otp, setOtp] = useState('');
+    const [verified, setVerified] = useState(true);
+    const [requestOtpTitle, setRequestOtpTitle] = useState('Request a new OTP in ');
+    const [canRequestOtp, setCanRequestOtp] = useState(true);
+
     const onTapOptions = () => {
         setIsSignup(!isSignup);
         setTitle(!isSignup ? 'Signup' : 'Login');
@@ -34,28 +39,46 @@ const _LoginScreen: React.FC<LoginProps> = ({ OnUserLogin, OnUserSignup, userRed
     }
 
 
-    return (<View style={styles.container}>
-        <View style={styles.navigation}><Text style={{ fontSize: 30, fontWeight: '400' }}>{title}</Text></View>
-        <View style={styles.body}>
+    if (!verified) {
+        //show OTP page
+        return (<View style={styles.container}>
+            <View style={styles.navigation}><Text style={{ fontSize: 30, fontWeight: '400' }}>{title}</Text></View>
+            <View style={styles.body}>
+                <Image source={require('../images/verify_otp.png')}
+                    style={{ width: 120, height: 120, margin: 20 }} />
+                <Text style={{ fontSize: 22, fontWeight: '500', margin: 10 }}> Verification </Text>
+                <Text></Text>
 
-            <TextField placeholder="Email ID" onTextChange={setEmail} isSecure={false} />
+            </View>
+            <View style={styles.footer}></View>
+        </View>)
+    }
 
-            {isSignup && <TextField placeholder="Phone Number" onTextChange={setPhone} isSecure={false} />}
-            <TextField placeholder="Password" onTextChange={setPassword} isSecure={true} />
+    else {
+        return (<View style={styles.container}>
+            <View style={styles.navigation}><Text style={{ fontSize: 30, fontWeight: '400' }}>{title}</Text></View>
+            <View style={styles.body}>
 
-            <ButtonWithTitle title={title} height={50} width={350} onTap={onTapAuthenticate} />
+                <TextField placeholder="Email ID" onTextChange={setEmail} isSecure={false} />
 
-            <ButtonWithTitle
-                title={!isSignup ? "No Account? Signup Here" : "Have an Account? Login Here"}
-                height={50}
-                width={350}
-                isNoBg={true}
-                onTap={onTapOptions}
-            />
+                {isSignup && <TextField placeholder="Phone Number" onTextChange={setPhone} isSecure={false} />}
+                <TextField placeholder="Password" onTextChange={setPassword} isSecure={true} />
 
-        </View>
-        <View style={styles.footer}></View>
-    </View>)
+                <ButtonWithTitle title={title} height={50} width={350} onTap={onTapAuthenticate} />
+
+                <ButtonWithTitle
+                    title={!isSignup ? "No Account? Signup Here" : "Have an Account? Login Here"}
+                    height={50}
+                    width={350}
+                    isNoBg={true}
+                    onTap={onTapOptions}
+                />
+
+            </View>
+            <View style={styles.footer}></View>
+        </View>)
+    }
+
 }
 
 const styles = StyleSheet.create({

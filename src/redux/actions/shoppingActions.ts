@@ -27,7 +27,7 @@ export type ShoppingAction = AvailabilityAction | ShoppingErrorAction | FoodSear
 
 //Trigger actions from Components
 
-export const onAvailability = (postCode: string) => {
+export const onAvailability = (/*postCode: string*/) => {
 
     // console.log(`Post Code with request ${postCode}`);
 
@@ -44,7 +44,7 @@ export const onAvailability = (postCode: string) => {
             //     });;
             const response = await axios.get<FoodAvailability>(`${BASE_URL}/restaurants/all`);
 
-            // console.log(response.data);
+            console.log(response.data);
 
             if (!response) {
                 dispatch({

@@ -21,7 +21,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
 
     const [totalAmount, setTotalAmount] = useState(0);
 
-    const { Cart } = props.userReducer;
+    const { Cart, user } = props.userReducer;
 
     console.log(Cart);
 
@@ -47,6 +47,7 @@ const _CartScreen: React.FC<CartScreenProps> = (props) => {
 
     const onValidateOrder = () => {
         navigate('LoginPage');
+        // if(user.verified)
     }
 
 

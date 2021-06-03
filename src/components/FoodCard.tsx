@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, Image, Dimensions } from 'react-native'
 import { FoodModel } from '../redux'
 import { ButtonAddRemove } from './ButtonAddRemove';
+import React, { useState, useEffect } from 'react'
 
 interface FoodProps {
     item: FoodModel;
